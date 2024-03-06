@@ -18,14 +18,19 @@ public class ValueInRangeRule extends BaseRule {
 
 	@Override
 	public Object process(Object data) throws ClassCastException {
+		
 		try {
-			if((Integer) data >= min && (Integer) data <= max) {
-				return super.process(data);
-			}
-			else {
-				super.setMessagePipe(errorMessage);
-				return false;
-			}
+			if (data instanceof Number) {
+	            Number number = (Number) data;
+	            if (number.doubleValue() >= min && number.doubleValue() <= max) {
+	                return super.process(data);
+	            } else {
+	                super.setMessagePipe(errorMessage);
+	                return false;
+	            }
+	        } else {
+	            throw new ClassCastException("Object cannot be cast to Number");
+	        }
 			
 		} catch(ClassCastException e) {
 			e.printStackTrace();
