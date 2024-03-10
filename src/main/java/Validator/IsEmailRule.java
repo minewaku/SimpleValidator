@@ -17,7 +17,7 @@ public class IsEmailRule extends BaseRule {
 	}
 
 	@Override
-	public Object process(Object data) throws ClassCastException {
+	public boolean process(Object data) throws ClassCastException {
 		Matcher matcher = pattern.matcher((String) data);
 		
 		try {
@@ -31,7 +31,7 @@ public class IsEmailRule extends BaseRule {
 			
 		} catch(ClassCastException e) {
 			e.printStackTrace();
-			return e;
+			return false;
 		}	
 	}
 }

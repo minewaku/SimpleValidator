@@ -10,10 +10,10 @@ public abstract class BaseRule implements IRule {
 		return nextRule;
 	}
 
-	public Object process(Object data) throws ClassCastException {
+	public boolean process(Object data) {
 		if (this.nextRule != null) {
 			
-			Boolean result = (Boolean) nextRule.process(data);
+			boolean result = nextRule.process(data);
 			if(result == false) {
 				this.messagePipe = nextRule.getMessagePipe();
 			}

@@ -14,7 +14,7 @@ public class IsNotContainRule extends BaseRule {
 	}
 
 	@Override
-	public Object process(Object data) throws ClassCastException {
+	public boolean process(Object data) throws ClassCastException {
 		try {
 			if(!((String) data).contains(checkString)) {
 				return super.process(data);
@@ -26,7 +26,7 @@ public class IsNotContainRule extends BaseRule {
 			
 		} catch(ClassCastException e) {
 			e.printStackTrace();
-			return e;
+			return false;
 		}	
 	}
 }
