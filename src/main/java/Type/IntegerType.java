@@ -1,7 +1,7 @@
-package TypeCheck;
+package Type;
 
-public class IntegerCheck implements ITypeCheck {
-
+public class IntegerType implements IType {
+	
 	public boolean check(Object data) {
 		if(data instanceof Integer) {
 			return true;

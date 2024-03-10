@@ -1,6 +1,6 @@
-package TypeCheck;
+package Type;
 
-public class StringCheck implements ITypeCheck {
+public class StringType implements IType {
 	
 	public boolean check(Object data) {
 		if(data instanceof String) {

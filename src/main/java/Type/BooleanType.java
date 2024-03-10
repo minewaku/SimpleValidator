@@ -1,6 +1,6 @@
-package TypeCheck;
+package Type;
 
-public class BooleanCheck implements ITypeCheck {
+public class BooleanType {
 
 	public boolean check(Object data) {
 		if(data instanceof Boolean) {

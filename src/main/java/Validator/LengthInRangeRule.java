@@ -17,7 +17,7 @@ public class LengthInRangeRule extends BaseRule {
 	}
 
 	@Override
-	public Object process(Object data) throws ClassCastException {
+	public boolean process(Object data) {
 		try {
 			if(((String) data).length() >= min && ((String) data).length() <= max) {
 				return super.process(data);
@@ -29,7 +29,7 @@ public class LengthInRangeRule extends BaseRule {
 			
 		} catch(ClassCastException e) {
 			e.printStackTrace();
-			return e;
+			return false;
 		}	
 	}
 }

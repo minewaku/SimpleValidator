@@ -1,6 +1,10 @@
 package Validator;
 
+import TypeCheck.NumberChecker;
+
 public class ValueInRangeRule extends BaseRule {
+	//private TypeChecker checker = new TypeChecker();
+	//checker.buildChecker().
 	private int min;
 	private int max;
 	
@@ -17,10 +21,12 @@ public class ValueInRangeRule extends BaseRule {
 	}
 
 	@Override
-	public Object process(Object data) throws ClassCastException {
+	public boolean process(Object data) {
 		
 		try {
-			if (data instanceof Number) {
+			NumberChecker checker = new NumberChecker();
+			if (checker.check(data)) {
+				
 	            Number number = (Number) data;
 	            if (number.doubleValue() >= min && number.doubleValue() <= max) {
 	                return super.process(data);
@@ -29,12 +35,12 @@ public class ValueInRangeRule extends BaseRule {
 	                return false;
 	            }
 	        } else {
-	            throw new ClassCastException("Object cannot be cast to Number");
+	            return false;
 	        }
 			
 		} catch(ClassCastException e) {
 			e.printStackTrace();
-			return e;
+			return false;
 		}	
 	}
 }
