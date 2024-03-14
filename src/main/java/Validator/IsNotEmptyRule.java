@@ -1,5 +1,7 @@
 package Validator;
 
+import TypeCheck.StringChecker;
+
 public class IsNotEmptyRule extends BaseRule {
 	
 	public IsNotEmptyRule() {
@@ -12,17 +14,22 @@ public class IsNotEmptyRule extends BaseRule {
 
 	@Override
 	public boolean process(Object data) throws ClassCastException {
-		try {
-			if((String) data != "") {
-				return super.process(data);
-			}
-			else {
-				super.setMessagePipe(errorMessage);
+		StringChecker checker = new StringChecker();
+		if (checker.check(data)) {
+			try {
+				if((String) data != "") {
+					return super.process(data);
+				}
+				else {
+					super.setMessagePipe(errorMessage);
+					return false;
+				}
+			} catch (ClassCastException e) {
+				e.printStackTrace();
 				return false;
 			}
-			
-		} catch(ClassCastException e) {
-			e.printStackTrace();
+		} else {
+			super.setMessagePipe(getTypeCheckErrorMessage(this.getClass().getName(), data.getClass().getName()));
 			return false;
 		}	
 	}
