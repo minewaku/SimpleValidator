@@ -1,5 +1,7 @@
 package Validator;
 
+import TypeCheck.StringChecker;
+
 public class LengthInRangeRule extends BaseRule {
 	private int min;
 	private int max;
@@ -18,18 +20,24 @@ public class LengthInRangeRule extends BaseRule {
 
 	@Override
 	public boolean process(Object data) {
-		try {
-			if(((String) data).length() >= min && ((String) data).length() <= max) {
-				return super.process(data);
-			}
-			else {
-				super.setMessagePipe(errorMessage);
+		StringChecker checker = new StringChecker();
+		if (checker.check(data)) {
+			try {
+				String string = (String) data;
+				if(string.length() >= min && string.length() <= max) {
+					return super.process(data);
+				}
+				else {
+					super.setMessagePipe(errorMessage);
+					return false;
+				}
+			} catch (ClassCastException e) {
+				e.printStackTrace();
 				return false;
 			}
-			
-		} catch(ClassCastException e) {
-			e.printStackTrace();
+		} else {
+			super.setMessagePipe(getTypeCheckErrorMessage(this.getClass().getName(), data.getClass().getName()));
 			return false;
-		}	
+		}
 	}
 }

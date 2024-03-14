@@ -1,5 +1,7 @@
 package Validator;
 
+import TypeCheck.StringChecker;
+
 public class IsNotContainRule extends BaseRule {
 	private String checkString = "";
 	
@@ -15,18 +17,23 @@ public class IsNotContainRule extends BaseRule {
 
 	@Override
 	public boolean process(Object data) throws ClassCastException {
-		try {
-			if(!((String) data).contains(checkString)) {
-				return super.process(data);
-			}
-			else {
-				super.setMessagePipe(errorMessage);
+		StringChecker checker = new StringChecker();
+		if (checker.check(data)) {
+			try {
+				if(!((String) data).contains(checkString)) {
+					return super.process(data);
+				}
+				else {
+					super.setMessagePipe(errorMessage);
+					return false;
+				}
+			} catch (ClassCastException e) {
+				e.printStackTrace();
 				return false;
 			}
-			
-		} catch(ClassCastException e) {
-			e.printStackTrace();
+		} else {
+			super.setMessagePipe(getTypeCheckErrorMessage(this.getClass().getName(), data.getClass().getName()));
 			return false;
-		}	
+		}
 	}
 }

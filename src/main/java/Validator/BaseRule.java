@@ -1,5 +1,8 @@
 package Validator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class BaseRule implements IRule {
 	private IRule nextRule = null;
 	private String messagePipe = ""; // errorMessage would be sent down through the pipe to the first IRule in the chain
@@ -37,4 +40,9 @@ public abstract class BaseRule implements IRule {
 	public void setErrorMessage(String customMessage) {
 		this.errorMessage = customMessage;		
 	}
+	
+	protected String getTypeCheckErrorMessage(String checkerClassName, String dataTypeClassName) {
+		return "Can not use " + checkerClassName.toString() + " to validate " + dataTypeClassName + " type!";
+	}
+
 }
